@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'pry'
 
 use Rack::Session::Cookie,  :key => 'rack.session',
                             :path => '/',
