@@ -4,8 +4,6 @@ use Rack::Session::Cookie,  :key => 'rack.session',
                             :path => '/',
                             :secret => 'this_is_a_secret'
 
-set :sessions, true
-
 helpers do
   VALUES = %w(2 3 4 5 6 7 8 9 10 jack queen king ace) 
   SUITS = %w(clubs hearts diamonds spades)
