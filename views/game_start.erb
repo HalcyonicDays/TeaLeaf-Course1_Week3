@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html> 
+
+  <body>
+    <link type="text/css" rel="stylesheet" href="game_start.css"/>
+    <h3>Welcome, <%= session[:player_name] %>. You've got $<%= session[:money] %>.  <br/> How much would you like to bet?</h2>
+    <% params[:max_bet] = session[:money] %>
+    <form action='/post_bet' method='post'>
+      <input type="number" name="bet_amount"/>
+      <input type='submit' class="btn" value="Place Bet"/>
+    </form>
+  </body>
+
+</html>

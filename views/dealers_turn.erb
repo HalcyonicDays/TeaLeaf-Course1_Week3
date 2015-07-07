@@ -1,0 +1,46 @@
+<div id="dealers_turn">
+<!DOCTYPE html>
+<html> 
+
+  <body>
+    <link type="text/css" rel="stylesheet" href="/deal_cards.css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/dealers_turn.js"></script>
+
+    <h3><%="You've bet $#{session[:current_bet]} out of a total of $#{session[:money]}."%></h3>
+    
+    <% players_score = calculate_score(session[:players_hand]) %>
+    <% dealers_score = calculate_score(session[:dealers_hand]) %>
+
+    <h4><%="#{session[:player_name]}'s Hand:" %><h4> <br/>
+    <div class="well" >      
+      <% session[:players_hand].each do |card| %>
+        <% card_path = IMAGE_PATH + card.suit + '_' + card.value + IMG_EXTENSION %>
+        <img src="<%= card_path  %>"  />
+      <% end %>
+      <h5>You have <%= players_score %> points.</h5>
+    </div>
+    <br/>
+    
+    <h4>Dealer's Hand</h4> <br/>
+    <div class="well">
+      <% if dealers_score < DEALER_STAYS then %>
+        <div class="btn btn-warning" id="dealer_hits">Dealer Hits</div>
+      <% else %>
+        <form action='/conclusion' method='get'>
+          <input type='submit' class="btn btn-info" value="Next"/>
+        </form>
+      <% end %>
+      
+      <h5>The dealer is showing <%= dealers_score %> points.</h5>
+      <% session[:dealers_hand].each do |card| %>
+        <% card_path = IMAGE_PATH + card.suit + '_' + card.value + IMG_EXTENSION %>
+        <img src="<%= card_path  %>"  />
+      <% end %>
+      
+    </div>
+  </body>
+
+</html>
+</div>

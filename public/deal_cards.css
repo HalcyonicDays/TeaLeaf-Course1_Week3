@@ -1,0 +1,12 @@
+h4 {
+  color: green;
+}
+
+img {
+  border: 2px solid black;
+  margin: 2px;
+}
+
+form {
+  display: inline;
+}

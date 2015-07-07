@@ -1,0 +1,58 @@
+<div id="deal_cards"> 
+<!DOCTYPE html>
+<html> 
+  <head>
+    <link type="text/css" rel="stylesheet" href="/deal_cards.css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/deal_cards.js"></script>
+  </head>
+
+  <body>
+    <h3><%="You've bet $#{session[:current_bet]} out of a total of $#{session[:money]}."%></h3>
+    
+    <% players_score = calculate_score(session[:players_hand]) %>
+    <% dealers_score = calculate_score(session[:dealers_hand]) %>
+
+    <h4><%="#{session[:player_name]}'s Hand:" %></h4> <br/>
+    <div class="well" >
+      <% session[:players_hand].each do |card| %>
+        <% card_path = IMAGE_PATH + card.suit + '_' + card.value + IMG_EXTENSION %>
+        <img src="<%= card_path  %>"  />
+      <% end %>
+      <h5>You have <%= players_score %> points.</h5>
+
+      <% if players_score < BLACKJACK then %>
+        <div class="btn btn-success" id="hit_button">Hit</div>
+        <div class="btn btn-warning" id="stay_button">Stay</div>
+      
+      <% elsif players_score == BLACKJACK then %>
+        <h5 id="blackjack"><%= "Congratulations, #{session[:player_name]}, you got #{BLACKJACK}."%> </h5>
+
+        <form action='/conclusion' method='get'>
+          <input type='submit' class="btn btn-info" value="Next"/>
+        </form>
+      
+      <% else %>
+        <h5 id="bust"><%= "#{session[:player_name]} busted! The Dealer wins. Better luck next time."%> </h5>
+
+        <form action='/conclusion' method='get'>
+          <input type='submit' class="btn" value="Next"/>
+        </form>
+      <% end %>
+
+    </div>
+    <br/>
+    <h4>Dealer's Hand</h4> <br/>
+    <div class="well">
+        <img src="<%= IMAGE_PATH + 'cover.jpg'  %>"  />
+      <% session[:dealers_hand].each do |card| %>
+        <% card_path = IMAGE_PATH + card.suit + '_' + card.value + IMG_EXTENSION %>
+        <img src="<%= card_path  %>"  />
+      <% end %>
+      <h5>The dealer is showing <%= dealers_score %> points.</h5>
+    </div>
+  </body>
+
+</html>
+</div>
